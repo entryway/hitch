@@ -15,6 +15,19 @@ module Hitch
   def self.print_info
     if Hitch.pairing?
       Hitch::UI.highline.say("#{Hitch.git_author_name} <#{Hitch.git_author_email}>")
+    else
+      Hitch::UI.highline.say <<-EOF
+        Currently coding solo as
+        #{`git config --get user.name`.chomp} <#{`git config --get user.email`.chomp}>
+      EOF
+    end
+  end
+
+  def self.amend
+    if pairing?
+      system("git commit --amend --author=\"#{Hitch.git_author_name} <#{Hitch.git_author_email}>\"")
+    else
+      system("git commit --amend --reset-author")
     end
   end
 
@@ -27,6 +40,7 @@ module Hitch
   def self.unhitch
     Hitch.current_pair = []
     write_export_file
+    print_info
   end
 
   def self.author_command

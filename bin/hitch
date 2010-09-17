@@ -14,6 +14,9 @@ opts = OptionParser.new do |opts|
   opts.on("-u", "--unhitch", "Clear pair information") do
     options = [:unhitch]
   end
+  opts.on("-a", "--amend", "Amend the latest commit with currently hitched pairs or unhitched solo") do
+    options = [:amend]
+  end
   opts.separator ""
   opts.separator "Common options:"
   opts.on_tail("-h", "--help", "Show this message") do

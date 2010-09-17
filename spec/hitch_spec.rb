@@ -36,6 +36,10 @@ describe Hitch do
 
     let(:pairs) { ['fry', 'leela'] }
 
+    before do
+      Hitch.stub(:print_info)
+    end
+
     it 'sets the current pair to an empty array' do
       Hitch.should_receive(:current_pair=).with([])
       Hitch.unhitch
@@ -60,8 +64,9 @@ describe Hitch do
 
     context 'when not pairing' do
       it 'returns nothing' do
+        Hitch::UI.highline.should_receive(:say).with("Currently coding solo")
         Hitch.current_pair = []
-        Hitch.print_info.should be_nil
+        Hitch.print_info
       end
     end
 
